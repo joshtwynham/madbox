@@ -1,5 +1,9 @@
 # Madbox Assignment
 
+## Gameplay
+
+Press space to move the character. Releasing space stops the character from moving.
+
 ## Time Taken
 I spent around 30 minutes planning, 4 hours developing, and 30 minutes testing and finishing up. 
 
