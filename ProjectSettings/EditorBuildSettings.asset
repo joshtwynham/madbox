@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 739491247e5a040e58ea883e5abb5945
+  - enabled: 1
+    path: Assets/Scenes/BigSpinnerLittleSpinner.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ShortRoadHome.unity
+    guid: c07aebc23b63842a693438547fd948ac
+  - enabled: 1
+    path: Assets/Scenes/LongRoadHome.unity
+    guid: b6e2379f377794169b8471c6b76b9528
   m_configObjects: {}

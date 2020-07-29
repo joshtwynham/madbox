@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public event Action OnApproachObstacle;
 
     private NavMeshAgent _navMesh;
+    private Rigidbody _rigidbody;
+    private bool _reachedDestination;
 
     #endregion
 
@@ -20,11 +22,13 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _navMesh = GetComponent<NavMeshAgent>();
+        _reachedDestination = false;
 
+        _navMesh = GetComponent<NavMeshAgent>();
+        _rigidbody = GetComponent<Rigidbody>();
 
         StopPlayer();
-        _navMesh.destination = GameManager.Instance.GetFinishPosition();
+        _navMesh.destination = LevelManager.Instance.GetFinishPosition();
     }
 
     // Update is called once per frame
@@ -34,11 +38,21 @@ public class PlayerController : MonoBehaviour
         {
             HandleInput();
 
-            if (_navMesh.remainingDistance < 0.2)
+            if (_navMesh.remainingDistance < 0.2 && !_reachedDestination)
             {
                 ReachedFinishLine();
             }
         }
+    }
+
+    public void ResetPlayer()
+    {
+        _rigidbody.velocity = new Vector3(0f, 0f, 0f);
+        _rigidbody.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        _navMesh.enabled = true;
+        _navMesh.isStopped = true;
+        _navMesh.destination = LevelManager.Instance.GetFinishPosition();
     }
 
     private void HandleInput()
@@ -66,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void ReachedFinishLine()
     {
+        _reachedDestination = true;
         StopPlayer();
 
         _navMesh.updatePosition = false;
@@ -76,23 +91,22 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<Obstacle>() != null && _navMesh.enabled == true)
         {
-            OnPlayerKilled.Invoke();
-
-            PushPlayer(collision);
             KillPlayer();
+            PushPlayer(collision);
+            OnPlayerKilled.Invoke();
         }
     }
 
     private void PushPlayer(Collision collision)
     {
-        int magnitude = 1;
+        int magnitude = 100;
         Vector3 force = transform.position - collision.transform.position;
 
         force.Normalize();
         gameObject.GetComponent<Rigidbody>().AddForce(force * magnitude);
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         StopPlayer();
         _navMesh.enabled = false;

@@ -6,8 +6,11 @@ public class Spinning : Obstacle
 {
     private Vector3 rotation;
 
-    private void Start()
+    public override float ObstacleProximity { get { return transform.lossyScale.x / 0.15f; } }
+
+    override protected void Start()
     {
+        base.Start();
         rotation = new Vector3(0, MovementSpeed, 0);
     }
 

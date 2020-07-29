@@ -6,7 +6,14 @@ public abstract class Obstacle : MonoBehaviour
 {
     public float MovementSpeed;
 
-    virtual protected void Update()
+    abstract public float ObstacleProximity { get; }
+
+    virtual protected void Start()
+    {
+        ObstacleManager.Instance.RegisterObstacle(this);
+    }
+
+    virtual protected void FixedUpdate()
     {
         MoveObstacle();
     }

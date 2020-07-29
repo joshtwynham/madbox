@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow  : MonoBehaviour
 {
     public Transform Player;
     public Vector3 BaseOffset;
@@ -50,7 +50,8 @@ public class CameraFollow : MonoBehaviour
         {
             if (obstacle as Spinning)
             {
-                _offset += new Vector3(2, 2, 0);
+                float sizeMultiplier = obstacle.transform.lossyScale.x * 10;
+                _offset += new Vector3(sizeMultiplier, sizeMultiplier, 0);
             }
             else if (obstacle as SideToSide)
             {
